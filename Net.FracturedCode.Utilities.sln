@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.FracturedCode.Utilities", "Net.FracturedCode.Utilities\Net.FracturedCode.Utilities.csproj", "{6D651081-3F8D-49D7-B09F-6219DCECC8B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.FracturedCode.Utilities.Tests", "Net.FracturedCode.Utilities.Tests\Net.FracturedCode.Utilities.Tests.csproj", "{858D1CAA-8E57-44DC-A760-EB73CB917FC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.FracturedCode.Utilities.Benchmarks", "Net.FracturedCode.Utilities.Benchmarks\Net.FracturedCode.Utilities.Benchmarks.csproj", "{D759C789-24BC-4A8F-A36E-5C02EB9E1CD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D651081-3F8D-49D7-B09F-6219DCECC8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D651081-3F8D-49D7-B09F-6219DCECC8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D651081-3F8D-49D7-B09F-6219DCECC8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D651081-3F8D-49D7-B09F-6219DCECC8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{858D1CAA-8E57-44DC-A760-EB73CB917FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{858D1CAA-8E57-44DC-A760-EB73CB917FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{858D1CAA-8E57-44DC-A760-EB73CB917FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{858D1CAA-8E57-44DC-A760-EB73CB917FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D759C789-24BC-4A8F-A36E-5C02EB9E1CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D759C789-24BC-4A8F-A36E-5C02EB9E1CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D759C789-24BC-4A8F-A36E-5C02EB9E1CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D759C789-24BC-4A8F-A36E-5C02EB9E1CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
