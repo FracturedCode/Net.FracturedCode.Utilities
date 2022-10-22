@@ -4,6 +4,12 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<Authors>FracturedCode</Authors>
+		
+		<Description>A collection of C# utilities by FracturedCode</Description>
+		<PackageLicenseUrl>https://github.com/FracturedCode/Net.FracturedCode.Utilities/blob/master/LICENSE</PackageLicenseUrl>
+		<RepositoryUrl>https://github.com/FracturedCode/Net.FracturedCode.Utilities</RepositoryUrl>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 </Project>
