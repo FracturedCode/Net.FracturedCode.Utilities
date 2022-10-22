@@ -1,22 +1,35 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Running;
-using Net.FracturedCode.Utilities;
+using BenchmarkDotNet.Validators;
+using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
 
-BenchmarkRunner.Run<BenchmarkRangeEnumerator>();
+namespace Net.FracturedCode.Utilities.Benchmarks;
+
 /*
 |          Method |  Size |         Mean |      Error |     StdDev | Allocated |
 |---------------- |------ |-------------:|-----------:|-----------:|----------:|
-|   NormalForLoop |    10 |     3.140 ns |  0.0397 ns |  0.0372 ns |         - |
-| ExtendedForLoop |    10 |    10.133 ns |  0.0417 ns |  0.0390 ns |         - |
-|   NormalForLoop |  1000 |   253.020 ns |  2.7288 ns |  2.5525 ns |         - |
-| ExtendedForLoop |  1000 |   259.726 ns |  0.7270 ns |  0.5676 ns |         - |
-|   NormalForLoop | 10000 | 2,476.260 ns | 18.2096 ns | 16.1423 ns |         - |
-| ExtendedForLoop | 10000 | 2,490.464 ns | 12.9125 ns | 12.0784 ns |         - |
+|   NormalForLoop |    10 |     2.882 ns |  0.0505 ns |  0.0448 ns |         - |
+| ExtendedForLoop |    10 |     9.610 ns |  0.0292 ns |  0.0244 ns |         - |
+|   NormalForLoop |  1000 |   250.845 ns |  1.1304 ns |  0.9439 ns |         - |
+| ExtendedForLoop |  1000 |   258.087 ns |  2.6768 ns |  2.2352 ns |         - |
+|   NormalForLoop | 10000 | 2,488.214 ns | 38.8218 ns | 36.3139 ns |         - |
+| ExtendedForLoop | 10000 | 2,485.906 ns | 24.8535 ns | 23.2480 ns |         - |
  */
 
 [MemoryDiagnoser(false)]
 public class BenchmarkRangeEnumerator
 {
+	[Test]
+	public void Test()
+	{
+		BenchmarkRunner.Run<BenchmarkRangeEnumerator>(
+			ManualConfig.Create(DefaultConfig.Instance)
+				.WithOptions(ConfigOptions.DisableLogFile | ConfigOptions.DisableOptimizationsValidator));
+	}
+	
 	[Params(10, 1000, 10000)]
 	public int Size { get; set; }
 
