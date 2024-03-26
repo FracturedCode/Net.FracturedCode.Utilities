@@ -1,46 +1,62 @@
+using Microsoft.Diagnostics.Tracing.Parsers.FrameworkEventSource;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Net.FracturedCode.Utilities.Tests;
 
 public class TypedFactoryTests
 {
-	private class MyHttpClient
+	private static (T, T) GetInstances<T>(Action<IServiceCollection> serviceSetup) where T : notnull
 	{
-		public readonly HttpClient Client;
-		public MyHttpClient(HttpClient client)
-		{
-			Client = client;
-		}
+		ServiceCollection services = [];
+		serviceSetup(services);
+		IServiceProvider serviceProvider = services.BuildServiceProvider();
+		var factory = serviceProvider.GetRequiredService<TypedFactory<T>>();
+		return (factory.Create(), factory.Create());
 	}
+
+	private class TestService;
+
+	[Test]
+	public void TypedFactory_TransientT_ProducesTransientInstances()
+	{
+		var instances = GetInstances<TestService>(s =>
+			s.AddTransient<TestService>()
+				.AddFactory<TestService>()
+		);
+		Assert.That(instances.Item1, Is.Not.EqualTo(instances.Item2));
+	}
+
+	[Test]
+	public void TypedFactory_ScopedT_ProducesOneInstance()
+	{
+		// How NOT to use TypedFactory<T>
+		var instances = GetInstances<TestService>(s =>
+			s.AddScoped<TestService>()
+				.AddFactory<TestService>()
+		);
+		Assert.That(instances.Item1, Is.EqualTo(instances.Item2));
+	}
+
+	private class MyHttpClient(HttpClient client)
+	{
+		public readonly HttpClient Client = client;
+	}
+
 	[Test]
 	public void TypedFactory_HttpClient_ProducesTransientInstances()
 	{
 		ServiceCollection services = [];
 		services.AddHttpClient<MyHttpClient>();
-		services.AddSingleton<TypedFactory<MyHttpClient>>();
-		IServiceProvider serviceProvider = services.BuildServiceProvider();
-		var factory = serviceProvider.GetRequiredService<TypedFactory<MyHttpClient>>();
-		var client1 = factory.Create();
-		var client2 = factory.Create();
+		services.AddFactory<MyHttpClient>();
+		var instances = GetInstances<MyHttpClient>(s =>
+		{
+			s.AddHttpClient<MyHttpClient>();
+			s.AddFactory<MyHttpClient>();
+		});
 		Assert.Multiple(() =>
 		{
-			Assert.That(client1, Is.Not.EqualTo(client2));
-			Assert.That(client1.Client, Is.Not.EqualTo(client2.Client));
+			Assert.That(instances.Item1, Is.Not.EqualTo(instances.Item2));
+			Assert.That(instances.Item1.Client, Is.Not.EqualTo(instances.Item2.Client));
 		});
-	}
-
-	private class ATestService();
-	
-	// How NOT to use the TypedFactory
-	[Test]
-	public void TypedFactory_Scoped_ProducesTheSameThing()
-	{
-		ServiceCollection services = [];
-		services.AddScoped<ATestService>();
-		services.AddSingleton<TypedFactory<ATestService>>();
-		IServiceProvider serviceProvider = services.BuildServiceProvider();
-		var factory = serviceProvider.GetRequiredService<TypedFactory<ATestService>>();
-		var instance2 = factory.Create();
-		Assert.That(factory.Create(), Is.EqualTo(instance2));
 	}
 }
