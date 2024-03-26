@@ -11,7 +11,7 @@ public class RangeEnumeratorTests
 		{
 			i++;
 		}
-		Assert.IsTrue(i == 10);
+        Assert.That(i, Is.EqualTo(10));
 	}
 
 	[Test]
@@ -23,7 +23,7 @@ public class RangeEnumeratorTests
 			i++;
 		}
 
-		Assert.IsTrue(i == 10);
+		Assert.That(i, Is.EqualTo(10));
 	}
 
 	[Test]

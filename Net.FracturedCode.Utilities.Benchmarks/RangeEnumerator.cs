@@ -4,16 +4,15 @@ using NUnit.Framework;
 namespace Net.FracturedCode.Utilities.Benchmarks;
 
 /*
-|          Method |  Size |         Mean |      Error |     StdDev | Allocated |
-|---------------- |------ |-------------:|-----------:|-----------:|----------:|
-|   NormalForLoop |    10 |     2.882 ns |  0.0505 ns |  0.0448 ns |         - |
-| ExtendedForLoop |    10 |     9.610 ns |  0.0292 ns |  0.0244 ns |         - |
-|   NormalForLoop |  1000 |   250.845 ns |  1.1304 ns |  0.9439 ns |         - |
-| ExtendedForLoop |  1000 |   258.087 ns |  2.6768 ns |  2.2352 ns |         - |
-|   NormalForLoop | 10000 | 2,488.214 ns | 38.8218 ns | 36.3139 ns |         - |
-| ExtendedForLoop | 10000 | 2,485.906 ns | 24.8535 ns | 23.2480 ns |         - |
+|          Method |  Size |         Mean |     Error |    StdDev | Allocated |
+|---------------- |------ |-------------:|----------:|----------:|----------:|
+|   NormalForLoop |    10 |     2.112 ns | 0.0196 ns | 0.0174 ns |         - |
+| ExtendedForLoop |    10 |     7.499 ns | 0.0140 ns | 0.0124 ns |         - |
+|   NormalForLoop |  1000 |   230.362 ns | 1.2501 ns | 1.1693 ns |         - |
+| ExtendedForLoop |  1000 |   240.736 ns | 2.2977 ns | 2.1493 ns |         - |
+|   NormalForLoop | 10000 | 2,272.061 ns | 6.3941 ns | 4.9921 ns |         - |
+| ExtendedForLoop | 10000 | 2,283.120 ns | 7.9026 ns | 6.5990 ns |         - |
  */
-
 [MemoryDiagnoser(false)]
 public class BenchmarkRangeEnumerator : GenericBenchmark
 {
