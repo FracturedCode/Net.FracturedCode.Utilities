@@ -5,19 +5,21 @@ namespace Net.FracturedCode.Utilities.Tests;
 
 public class TypedFactoryTests
 {
-	private static (T, T) GetInstances<T>(Action<IServiceCollection> serviceSetup) where T : notnull
+	private static (T, T) GetInstances<T>(Action<IServiceCollection> serviceSetup, string? key = null) where T : notnull
 	{
 		ServiceCollection services = [];
 		serviceSetup(services);
 		IServiceProvider serviceProvider = services.BuildServiceProvider();
-		var factory = serviceProvider.GetRequiredService<TypedFactory<T>>();
+		var factory = key is not null ?
+			serviceProvider.GetRequiredKeyedService<TypedFactory<T>>(key)
+			: serviceProvider.GetRequiredService<TypedFactory<T>>();
 		return (factory.Create(), factory.Create());
 	}
 
 	private class TestService;
 
 	[Test]
-	public void TypedFactory_TransientT_ProducesTransientInstances()
+	public void TransientT_ProducesTransientInstances()
 	{
 		var instances = GetInstances<TestService>(s =>
 			s.AddTransient<TestService>()
@@ -27,7 +29,7 @@ public class TypedFactoryTests
 	}
 
 	[Test]
-	public void TypedFactory_ScopedT_ProducesOneInstance()
+	public void ScopedT_ProducesOneInstance()
 	{
 		// How NOT to use TypedFactory<T>
 		var instances = GetInstances<TestService>(s =>
@@ -37,13 +39,22 @@ public class TypedFactoryTests
 		Assert.That(instances.Item1, Is.EqualTo(instances.Item2));
 	}
 
+	public void KeyedTransientT_ProducesTransientInstances()
+	{
+		var instances = GetInstances<TestService>(s =>
+			s.AddKeyedTransient<TestService>("key")
+				.AddFactory<TestService>()
+		);
+		Assert.That(instances.Item1, Is.Not.EqualTo(instances.Item2));
+	}
+
 	private class MyHttpClient(HttpClient client)
 	{
 		public readonly HttpClient Client = client;
 	}
 
 	[Test]
-	public void TypedFactory_HttpClient_ProducesTransientInstances()
+	public void HttpClient_ProducesTransientInstances()
 	{
 		ServiceCollection services = [];
 		services.AddHttpClient<MyHttpClient>();
