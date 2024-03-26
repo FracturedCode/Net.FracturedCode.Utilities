@@ -1,6 +1,6 @@
 namespace Net.FracturedCode.Utilities.Tests;
 
-public class TimeSpanAwaiter
+public class TimeSpanAwaiterTests
 {
 	[Test]
 	public async Task CompareTimeSpanAwaiterAndTaskDelay()
