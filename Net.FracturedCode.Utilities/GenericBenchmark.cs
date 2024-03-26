@@ -11,7 +11,7 @@ public abstract class GenericBenchmark
 	/// Easiest implementation is `=> DefaultBench();`
 	/// </summary>
 	public abstract void Benchmark();
-	
+
 	protected void DefaultBench(ManualConfig? config = null) => BenchmarkRunner.Run(GetType(), config ?? CustomDefaultConfig);
 
 	protected ManualConfig CustomDefaultConfig =>
