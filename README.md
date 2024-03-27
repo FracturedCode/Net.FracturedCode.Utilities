@@ -10,7 +10,7 @@ A repository of handy C# utilities.
 2. TimeSpan.GetAwaiter. `await` a `TimeSpan`.
 3. A `GenericBenchmark` class for repurposing the test explorer GUI for a benchmark suite.
 4. A `TypedFactory<T>` class which is effectively a macro of `serviceProvider.GetRequiredService<T>()`. 
-My primary use case for this is to more easily consume typed `HttpClient`s in Singleton services.
+My primary use case for this is to more easily consume [typed `HttpClient`s in Singleton services](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory#avoid-typed-clients-in-singleton-services).
 
 ## Usage
 
