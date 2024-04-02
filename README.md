@@ -11,6 +11,8 @@ A repository of handy C# utilities.
 3. A `GenericBenchmark` class for repurposing the test explorer GUI for a benchmark suite.
 4. A `TypedFactory<T>` class which is effectively a macro of `serviceProvider.GetRequiredService<T>()`. 
 My primary use case for this is to more easily consume [typed `HttpClient`s in Singleton services](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory#avoid-typed-clients-in-singleton-services).
+5. A `.WhenAll` extension method for `Task`s and `ValueTask`s. Now you can 
+   further chain your async LINQ.
 
 ## Usage
 
