@@ -17,3 +17,7 @@ My primary use case for this is to more easily consume [typed `HttpClient`s in S
 ## Usage
 
 Please reference the unit tests.
+
+## TODO
+- wasm compat
+- github actions w/ publish
