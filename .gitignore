@@ -133,3 +133,7 @@ $RECYCLE.BIN/
 _NCrunch*
 
 .idea/
+
+
+.nuke/*
+!.nuke/parameters.json
