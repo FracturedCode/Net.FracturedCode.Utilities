@@ -19,5 +19,4 @@ My primary use case for this is to more easily consume [typed `HttpClient`s in S
 Please reference the unit tests.
 
 ## TODO
-- wasm compat
-- github actions w/ publish
+- NativeAOT compat
