@@ -61,6 +61,7 @@ class Build : NukeBuild
 		{
 			DotNetTasks.DotNetTest(_ => _
 				.SetProjectFile(Solution.Net_FracturedCode_Utilities_Tests)
+				.SetConfiguration(Configuration)
 				.EnableNoRestore()
 				.EnableNoBuild()
 				.SetLoggers("trx")
