@@ -1,20 +1,17 @@
 using System;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI;
-using Nuke.Common.Execution;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Utilities.Collections;
-using Octokit;
-using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 
+[GitHubActions("publish",
+	GitHubActionsImage.UbuntuLatest,
+	On = [GitHubActionsTrigger.WorkflowDispatch],
+	InvokedTargets = [nameof(Pack)],
+	ImportSecrets = [nameof(NugetApiKey)]
+)]
 class Build : NukeBuild
 {
 	/// Support plugins are available for:
@@ -59,6 +56,7 @@ class Build : NukeBuild
 
 	Target Test => _ => _
 		.DependsOn(Compile)
+		.Produces(ArtifactsDirectory / "*.trx")
 		.Executes(() =>
 		{
 			DotNetTasks.DotNetTest(_ => _
@@ -71,7 +69,8 @@ class Build : NukeBuild
 		});
 
 	Target Pack => _ => _
-		.DependsOn(Clean, Test)
+		.DependsOn(Compile)
+		.Produces(ArtifactsDirectory / "*.nupkg", ArtifactsDirectory / "*.snupkg")
 		.Executes(() =>
 		{
 			DotNetTasks.DotNetPack(_ => _
@@ -88,7 +87,7 @@ class Build : NukeBuild
 
 	Target Publish => _ => _
 		.Requires(() => NugetApiKey)
-		.DependsOn(Pack)
+		.DependsOn(Clean, Test, Pack)
 		.Executes(() =>
 		{
 			string sourceEndpoint = "https://" + (IsServerBuild && Configuration == Configuration.Release
